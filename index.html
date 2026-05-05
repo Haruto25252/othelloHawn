@@ -849,7 +849,9 @@ function posTT(el) {
 function clearPV() {
   previewRC=null;
   document.querySelectorAll('.pv-black,.pv-white,.pv-flip-black,.pv-flip-white').forEach(el=>el.remove());
-  document.getElementById('preview-tt').classList.remove('show');
+  const tt=document.getElementById('preview-tt');
+  tt.classList.remove('show');
+  tt.style.display='';
 }
 
 // ══════════════════════════════════════════════
