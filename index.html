@@ -777,10 +777,11 @@ async function placeStone(r,c,color,isAI=false) {
   const nMv=getLegal(board,next), cMv=getLegal(board,color);
   if(!nMv.length&&!cMv.length){endGame();return;}
   if(!nMv.length){
-    currentTurn=color; updateUI(); setStatus(`<strong>${next===BLACK?'黒':'白'}はパス</strong>します`); await sleep(1000);
-    if(mode!=='pvp'&&color===WHITE){currentTurn=BLACK;updateUI();}
-    else if(mode!=='pvp'&&next===WHITE){currentTurn=WHITE;updateUI();await sleep(450);aiMove();}
-    else{currentTurn=color;updateUI();}
+    currentTurn=color; updateUI();
+    setStatus(`<strong>${next===BLACK?'黒':'白'}は置ける場所がないためパスします</strong>`);
+    await sleep(1200);
+    updateUI();
+    if(mode!=='pvp'&&currentTurn===WHITE){await sleep(420);aiMove();}
     return;
   }
   currentTurn=next; updateUI();
@@ -949,8 +950,7 @@ function updateStatus() {
 }
 
 function updatePass() {
-  const l=getLegal(board,currentTurn), o=getLegal(board,-currentTurn);
-  document.getElementById('btn-pass').style.display=(mode==='pvp'&&!l.length&&o.length)?'':'none';
+  document.getElementById('btn-pass').style.display='none';
 }
 
 function updateHints() {
